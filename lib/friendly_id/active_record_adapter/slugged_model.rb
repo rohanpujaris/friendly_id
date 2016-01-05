@@ -103,12 +103,31 @@ module FriendlyId
         friendly_id_config.cache_column?
       end
 
+      # def arel_attributes_values(include_primary_key = true, include_readonly_attributes = true, attribute_names = @attributes.keys)
+      #   attrs      = {}
+      #   klass      = self.class
+      #   arel_table = klass.arel_table
+
+      #   attribute_names.each do |name|
+      #     if (column = column_for_attribute(name)) && (include_primary_key || self.class.primary_key != column)
+
+      #       if include_readonly_attributes || (!include_readonly_attributes && !self.class.readonly_attributes.include?(name))
+
+      #         value = read_attribute(name)
+
+      #         attrs[arel_table[name]] = value
+      #       end
+      #     end
+      #   end
+      #   attrs
+      # end
+
       # This method was removed in ActiveRecord 3.0.
       if !::ActiveRecord::Base.private_method_defined? :update_without_callbacks
         def update_without_callbacks
-          attributes_with_values = arel_attributes_values(false, false, attribute_names)
-          return false if attributes_with_values.empty?
-          self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.update(attributes_with_values)
+          # attributes_with_values = arel_attributes_values(false, false, attribute_names)
+          # return false if attributes_with_values.empty?
+          # self.class.unscoped.find_by(id: id).update_columns(attributes_with_values)
         end
       end
     end
