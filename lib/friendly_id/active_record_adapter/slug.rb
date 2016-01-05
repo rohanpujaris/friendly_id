@@ -5,13 +5,12 @@ class Slug < ::ActiveRecord::Base
   table_name = "slugs"
   before_save :enable_name_reversion, :set_sequence
   validate :validate_name
-  scope :similar_to, lambda {|slug| {:conditions => {
-        :name           => slug.name,
-        :scope          => slug.scope,
-        :sluggable_type => slug.sluggable_type
-      },
-      :order => "sequence ASC"
-    }
+  scope :similar_to, -> (slug) {
+    where(
+      :name           => slug.name,
+      :scope          => slug.scope,
+      :sluggable_type => slug.sluggable_type
+    ).order("sequence ASC")
   }
 
   def sluggable
