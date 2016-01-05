@@ -23,7 +23,7 @@ module FriendlyId
       include FriendlyId::Slugged::Model
 
       def find_slug(name, sequence)
-        slugs.find_by_name_and_sequence(name, sequence)
+        slugs.find_by(name: name, sequence: sequence)
       end
 
       # Returns the friendly id, or if none is available, the numeric id. Note that this
